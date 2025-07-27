@@ -1,21 +1,3 @@
-document.getElementById('cat-btn').addEventListener('click',getCat);
-function sendMessage(){
-    let messageBox = document.getElementById('message-content');
-    messageBox.value = ''
-
-    fetch('http://localhost:3000/info',{
-        method : 'POST',
-        headers : {
-            'Content-Type' : 'application/json'
-        },
-        body : JSON.stringify({
-            name: 'Alice',
-            age: 30
-        })
-    }).then(val=> val.json())
-    .then((val)=> console.log(val,'Response recieved'))
-}
-
 function getCat(){
     fetch('http://localhost:3000/getCat',{
         method : 'POST'
@@ -27,3 +9,32 @@ function getCat(){
         document.getElementById('cat-btn').removeEventListener('click',getCat,false);
     })
 }
+
+function addTodo(){
+    let toDo = prompt('Enter what you want to do.')
+    fetch('http://localhost:3000/addTodo',{
+        method : 'POST',
+        headers : {
+            'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify({
+            string: toDo,
+            done: false
+        })
+    }).then(val=> val.json())
+    .then((val)=> console.log(val,'Response recieved'))
+}
+
+(function getTodos(){
+    fetch('http://localhost:3000/getTodo',{
+        method : 'POST',
+        headers : {
+            'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify({
+            page: 1,
+            limit : 5
+        })
+    }).then(val=> val.json())
+    .then((val)=> console.log(val,'Response recieved'))
+})()
